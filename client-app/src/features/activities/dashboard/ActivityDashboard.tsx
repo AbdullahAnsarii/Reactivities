@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
-import { Activity } from "../../../models/activity";
+import { Activity } from "../../../App/models/activity";
 import ActivityDetails from "../details/ActivityDetails";
 import ActivityForm from "../form/ActivityForm";
 import ActivityList from "./ActivityList";
@@ -15,16 +15,18 @@ interface Props {
     formClose: () => void;
     createOrEdit: (activity: Activity) => void;
     deleteActivity: (id: string) => void;
+    submitting: boolean;
 }
 
-export default function ActivityDashboard({ activities, selectActivity, selectedActivity, cancelSelectActivity, editMode, formClose, formOpen, createOrEdit, deleteActivity }: Props) {
+export default function ActivityDashboard({ activities, selectActivity, selectedActivity, cancelSelectActivity, editMode, formClose, formOpen, createOrEdit, deleteActivity, submitting }: Props) {
     return (
         <Grid>
             <Grid.Column width="10">
                 <ActivityList
                     activities={activities}
                     selectActivity={selectActivity}
-                    deleteActivity={deleteActivity} ></ActivityList>
+                    deleteActivity={deleteActivity}
+                    submitting={submitting} />
             </Grid.Column>
             <Grid.Column width="6">
                 {selectedActivity && !editMode &&
@@ -38,7 +40,8 @@ export default function ActivityDashboard({ activities, selectActivity, selected
                     <ActivityForm //band tbhi hoga jb khula hoga
                         formClose={formClose}
                         activity={selectedActivity}
-                        createOrEdit={createOrEdit} />}
+                        createOrEdit={createOrEdit}
+                        submitting={submitting} />}
             </Grid.Column>
         </Grid>
     )
